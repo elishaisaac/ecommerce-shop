@@ -111,7 +111,7 @@ export const updateUserRole = async (req, res) => {
             roleFID: req.body.roleFID,
             userFID: req.body.userFID
         })) {
-            return res.status(400).send(
+            return res.showError(400, 
                 "This would leave the system without an admin. Make another admin first."
             )
         }
@@ -145,7 +145,7 @@ export const updateUserRole = async (req, res) => {
 export const removeUserRole = async (req, res) => {
     try {
         if (await blocksLastAdmin(req.params.id)) {
-            return res.status(400).send(
+            return res.showError(400, 
                 "This is the only admin's role link, so it cannot be removed. Make another admin first."
             )
         }
@@ -174,7 +174,7 @@ export const removeUserRole = async (req, res) => {
 export const deleteUserRole = async (req, res) => {
     try {
         if (await blocksLastAdmin(req.params.id)) {
-            return res.status(400).send(
+            return res.showError(400, 
                 "This is the only admin's role link, so it cannot be removed. Make another admin first."
             )
         }

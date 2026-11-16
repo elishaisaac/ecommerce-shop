@@ -7,7 +7,7 @@ export const getOrderForm = (req, res) => {
     try {
         res.render("Order/OrderForm.ejs")
     } catch (error) {
-        
+
     }
 }
 
@@ -46,13 +46,13 @@ export const allOrders = async (req, res) => {
         const allOrders = await Order.find({
             isDeleted: false
         }).populate("userFID")
-        const Users = await User.find({isDeleted: false})
+        const Users = await User.find({ isDeleted: false })
         // res.status(200).json({
         //     success: true,
         //     error: false,
         //     data: allOrders
         // })
-        res.render("Order/OrderIndex.ejs", {data : allOrders, Users})
+        res.render("Order/OrderIndex.ejs", { data: allOrders, Users })
 
     } catch (error) {
         res.status(500).json({
@@ -88,27 +88,22 @@ export const singleOrder = async (req, res) => {
 export const editOrder = async (req, res) => {
     try {
         const order = await Order.findById(req.params.id)
-        res.render("Order/EditOrder.ejs", {order})
+        res.render("Order/EditOrder.ejs", { order })
     } catch (error) {
-        
+
     }
 }
 
 export const updateOrder = async (req, res) => {
     try {
-        const updateData = {
-            orderNumber: req.body.orderNumber,
-            orderStatus: req.body.orderStatus,
-            orderTotal: req.body.orderTotal
-        }
-
-        if (req.body.userFID) {
-            updateData.userFID = req.body.userFID
+        const statuses = Order.schema.path("orderStatus").enumValues
+        if (!statuses.includes(req.body.orderStatus)) {
+            return res.showError(400, "Invalid order status")
         }
 
         const updatedOrder = await Order.findByIdAndUpdate(
             req.params.id,
-            updateData,
+            { orderStatus: req.body.orderStatus },
             {
                 returnDocument: "after",
                 runValidators: true
@@ -171,7 +166,7 @@ export const orderDetails = async (req, res) => {
             isDeleted: false
         }).populate("userFID")
 
-        if (!order) return res.status(404).send("Order not found")
+        if (!order) return res.showError(404, "Order not found")
 
         const items = await OrderedItem.find({
             orderFID: order._id,
@@ -183,7 +178,7 @@ export const orderDetails = async (req, res) => {
 
         res.render("Order/OrderDetails.ejs", { order, items, address, statuses })
     } catch (error) {
-        if (error.name === "CastError") return res.status(404).send("Order not found")
+        if (error.name === "CastError") return res.showError(404, "Order not found")
         res.status(500).json({
             success: false,
             error: true,
@@ -198,7 +193,7 @@ export const updateOrderStatus = async (req, res) => {
         const { orderStatus } = req.body
 
         if (!statuses.includes(orderStatus)) {
-            return res.status(400).send("Invalid status")
+            return res.showError(400, "Invalid status")
         }
 
         await Order.findByIdAndUpdate(req.params.id, { orderStatus })

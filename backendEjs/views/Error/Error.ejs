@@ -1,0 +1,35 @@
+<%- include("../partials/HeadSection.ejs") %>
+
+<%
+    const titles = {
+        400: "Please check your input",
+        403: "Not allowed",
+        404: "Page not found"
+    }
+    const title = titles[status] || "Something went wrong"
+    const technical = status >= 500
+%>
+
+<div class="card mx-auto mt-4" style="max-width: 560px">
+    <div class="card-body text-center py-5">
+        <div class="display-4 fw-bold text-secondary mb-2"><%= status %></div>
+        <h4 class="mb-2"><%= title %></h4>
+
+        <% if (technical) { %>
+            <p class="text-secondary">
+                The action could not be completed. Please go back and try again.
+            </p>
+            <details class="text-start small text-secondary mb-3">
+                <summary>Technical details</summary>
+                <code><%= message %></code>
+            </details>
+        <% } else { %>
+            <p class="text-secondary"><%= message %></p>
+        <% } %>
+
+        <button type="button" class="btn btn-outline-secondary" onclick="history.back()">Go back</button>
+        <a href="/api/dashboard" class="btn btn-primary">Dashboard</a>
+    </div>
+</div>
+
+<%- include("../partials/Footer.ejs") %>

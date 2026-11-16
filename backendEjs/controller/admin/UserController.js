@@ -19,7 +19,7 @@ export const addUser = async (req, res) => {
         //     userEmail
         // })
         if (!userPassword || userPassword.length < 8) {
-            return res.status(400).send("Password must be at least 8 characters")
+            return res.showError(400, "Password must be at least 8 characters")
         }
 
         const hashedPassword = await bcrypt.hash(userPassword, 10)
@@ -108,7 +108,7 @@ export const updateUser = async (req, res) => {
 
         if (req.body.userPassword) {
             if (req.body.userPassword.length < 8) {
-                return res.status(400).send("Password must be at least 8 characters")
+                return res.showError(400, "Password must be at least 8 characters")
             }
             updateData.userPassword = await bcrypt.hash(req.body.userPassword, 10)
         }
@@ -140,7 +140,7 @@ export const updateUser = async (req, res) => {
 export const removeUser = async (req, res) => {
     try {
         if (await isLastAdmin(req.params.id)) {
-            return res.status(400).send(
+            return res.showError(400, 
                 "This is the only admin account, so it cannot be deleted. Create another admin first."
             )
         }
@@ -169,7 +169,7 @@ export const removeUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
     try {
         if (await isLastAdmin(req.params.id)) {
-            return res.status(400).send(
+            return res.showError(400, 
                 "This is the only admin account, so it cannot be deleted. Create another admin first."
             )
         }

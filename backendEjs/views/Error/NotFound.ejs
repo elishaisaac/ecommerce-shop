@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Page not found | E-Commerce Manager</title>
+    <script>
+        document.documentElement.setAttribute(
+            "data-bs-theme",
+            window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+        )
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" />
+    <link rel="stylesheet" href="/css/adminlte.css" />
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            background: var(--bs-tertiary-bg);
+        }
+        .nf-card { width: 100%; max-width: 440px; }
+    </style>
+</head>
+<body>
+    <div class="card nf-card shadow text-center">
+        <div class="card-body p-5">
+            <div class="display-3 fw-bold text-secondary mb-2">404</div>
+            <h4 class="mb-2">Page not found</h4>
+            <p class="text-secondary mb-4">
+                The page you are looking for does not exist or has moved.
+            </p>
+            <a href="/" class="btn btn-primary">Go to admin</a>
+        </div>
+    </div>
+</body>
+</html>

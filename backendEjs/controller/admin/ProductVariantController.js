@@ -24,7 +24,7 @@ export const addProductVariant = async (req, res) => {
         const { productFID, productSKU } = req.body
 
         const prices = readPrices(req.body)
-        if (prices.error) return res.status(400).send(prices.error)
+        if (prices.error) return res.showError(400, prices.error)
 
         const newProductVariant = new ProductVariant({
             productFID,
@@ -130,7 +130,7 @@ export const editProductVariant = async (req, res) => {
 export const updateProductVariant = async (req, res) => {
     try {
         const prices = readPrices(req.body)
-        if (prices.error) return res.status(400).send(prices.error)
+        if (prices.error) return res.showError(400, prices.error)
         const updatedProductVariant =
             await ProductVariant.findByIdAndUpdate(
                 req.params.id,

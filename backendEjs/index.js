@@ -27,7 +27,7 @@ import dashboardRouter from "./routes/admin/DashboardRoutes.js"
 import cookieParser from "cookie-parser"
 import authRouter from "./routes/admin/AuthRoutes.js"
 import { requireAdmin } from "./middleware/auth.js"
-
+import { friendlyErrors } from "./middleware/errors.js"
 // STORE ROUTES
 import storeRouter from "./routes/store/StoreRoutes.js"
 
@@ -43,9 +43,9 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 // MiddleWare
-app.set('view engine', 'ejs')
+app.set("view engine", "ejs")
 app.set("views", path.join(__dirname, "views"))
-app.use(express.static(path.join("public")))
+app.use(express.static(path.join(__dirname, "public")))
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -55,12 +55,14 @@ app.use(cookieParser())
 app.use("/api/store", storeRouter)
 app.use("/", authRouter)
 
-// GUARD: everything below this line needs an admin login
+// GUARD, then the error helper. Every admin route goes BELOW these two lines.
 app.use("/api", requireAdmin)
+app.use("/api", friendlyErrors)
 
 app.get("/", (req, res) => res.redirect("/api/dashboard"))
 
 // ADMIN API
+app.use("/api/dashboard", dashboardRouter)
 app.use("/api/product", productRouter)
 app.use("/api/brand", brandRouter)
 app.use("/api/category", categoryRouter)
@@ -81,14 +83,27 @@ app.use("/api/coupon", couponRouter)
 app.use("/api/orderDiscount", orderDiscountRouter)
 app.use("/api/orderAddress", orderAddressRouter)
 
-// DASHBOARD ROUTE
-app.get("/", (req, res) => res.redirect("/api/dashboard"))
-app.use("/api/dashboard", dashboardRouter)
+// NOT FOUND and ERRORS: these must stay last
+app.use((req, res) => {
+    res.status(404)
+    if (req.accepts("html")) return res.render("Error/NotFound.ejs")
+    res.json({ success: false, error: true, message: "Not found" })
+})
+app.use("/api", (req, res) => {
+    res.showError(404, "That page does not exist.")
+})
 
-// STORE API
-app.use("/api/store", storeRouter)
+app.use((req, res) => {
+    res.status(404).send("Page not found")
+})
 
-app.listen(PORT, (req, res) => {
+app.use((err, req, res, next) => {
+    if (res.headersSent) return next(err)
+    if (res.showError) return res.showError(500, err.message)
+    res.status(err.status || 500).json({ success: false, error: true, message: err.message })
+})
+
+app.listen(PORT, () => {
     console.log("Server has Started...")
     connectDB()
 })

@@ -27,7 +27,7 @@ export const addVariantAttributeValue = async (req, res) => {
         })
 
         if (exists) {
-            return res.status(400).send(
+            return res.showError(400, 
                 "This variant already has a value for that attribute. Edit the existing row instead."
             )
         }
@@ -144,7 +144,7 @@ export const updateVariantAttributeValue = async (req, res) => {
             isDeleted: false
         })
         if (duplicate) {
-            return res.status(400).send(
+            return res.showError(400, 
                 "This variant already has a value for that attribute. Edit the existing row instead."
             )
         }

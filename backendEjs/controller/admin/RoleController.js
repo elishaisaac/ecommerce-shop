@@ -95,7 +95,7 @@ export const updateRole = async (req, res) => {
     try {
         const existing = await Role.findById(req.params.id)
         if (existing?.roleName === PROTECTED_ROLE && req.body.roleName !== PROTECTED_ROLE) {
-            return res.status(400).send(
+            return res.showError(400, 
                 'The "Admin" role cannot be renamed, because the admin login depends on it.'
             )
         }
@@ -130,7 +130,7 @@ export const removeRole = async (req, res) => {
     try {
         const existing = await Role.findById(req.params.id)
         if (existing?.roleName === PROTECTED_ROLE) {
-            return res.status(400).send('The "Admin" role cannot be deleted.')
+            return res.showError(400, 'The "Admin" role cannot be deleted.')
         }
         await Role.findByIdAndUpdate(
             req.params.id,
@@ -158,7 +158,7 @@ export const deleteRole = async (req, res) => {
     try {
         const existing = await Role.findById(req.params.id)
         if (existing?.roleName === PROTECTED_ROLE) {
-            return res.status(400).send('The "Admin" role cannot be deleted.')
+            return res.showError(400, 'The "Admin" role cannot be deleted.')
         }
         await Role.findByIdAndDelete(req.params.id)
 
