@@ -22,6 +22,7 @@ import orderedItemRouter from "./routes/admin/OrderedItemRoutes.js"
 import couponRouter from "./routes/admin/CouponRoutes.js"
 import orderDiscountRouter from "./routes/admin/OrderDiscountRoutes.js"
 import orderAddressRouter from "./routes/admin/OrderAddressRoutes.js"
+import dashboardRouter from "./routes/admin/DashboardRoutes.js"
 
 // STORE ROUTES
 import storeRouter from "./routes/store/StoreRoutes.js"
@@ -67,6 +68,10 @@ app.use("/api/orderedItem", orderedItemRouter)
 app.use("/api/coupon", couponRouter)
 app.use("/api/orderDiscount", orderDiscountRouter)
 app.use("/api/orderAddress", orderAddressRouter)
+
+// DASHBOARD ROUTE
+app.get("/", (req, res) => res.redirect("/api/dashboard"))
+app.use("/api/dashboard", dashboardRouter)
 
 // STORE API
 app.use("/api/store", storeRouter)
