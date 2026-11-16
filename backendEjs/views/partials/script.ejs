@@ -270,4 +270,21 @@
         })
     })
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll("table.table").forEach(table => {
+            const headers = Array.from(table.querySelectorAll("thead th"))
+                .map(th => th.textContent.trim())
+            if (!headers.length) return
+
+            table.classList.add("table-stack")
+            table.querySelectorAll("tbody > tr").forEach(row => {
+                Array.from(row.children).forEach((cell, i) => {
+                    if (cell.colSpan > 1 || !headers[i]) return
+                    cell.setAttribute("data-label", headers[i])
+                })
+            })
+        })
+    })
+</script>
 <!--end::Script-->

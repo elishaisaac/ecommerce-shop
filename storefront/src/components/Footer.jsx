@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom"
 import { useProducts } from "../hooks/UseProducts"
-import { STORE_NAME } from "../config"
+import { STORE_NAME,  API_URL } from "../config"
 import "./Footer.css"
 
 function Footer() {
@@ -53,6 +53,7 @@ function Footer() {
         <div className="ft-bottom">
           <span>© {new Date().getFullYear()} {STORE_NAME}</span>
           <span>Demo store built with React, Express and MongoDB. No real orders are processed.</span>
+          <a href={`${API_URL}/login`}>Admin</a>
         </div>
       </div>
     </footer>
