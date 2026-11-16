@@ -1,4 +1,4 @@
-.hc-wrap { padding: 110px 0 10px; }
+.hc-wrap { padding: 20px 0 10px; }
 
 .hc {
   position: relative;
@@ -42,7 +42,7 @@
   color: #fff;
   margin: 8px 0 14px;
 }
-.hc-price { font-size: 18px; margin-bottom: 22px; }
+.hc-price { font-size: 18px; margin-bottom: 22px; color: #fff }
 .hc-off {
   display: inline-block;
   background: #fff;
@@ -117,14 +117,19 @@
 .hc-dots button.active { background: #fff; width: 24px; border-radius: 6px; }
 
 @media (max-width: 767px) {
-  .hc-wrap { padding-top: 100px; }
+  .hc-wrap { padding-top: 14px; }
+  .hc { min-height: 0; border-radius: 16px; }
   .hc-slide {
     flex-direction: column-reverse;
     text-align: center;
-    padding: 28px 24px 44px;
-    gap: 18px;
+    min-height: 0;
+    padding: 22px 20px 40px;
+    gap: 14px;
   }
-  .hc-text h2 { font-size: 28px; }
-  .hc-image img { width: 170px; height: 170px; }
+  .hc-text h2 { font-size: 24px; margin: 6px 0 10px; }
+  .hc-price { font-size: 16px; margin-bottom: 16px; }
+  .hc-btn { padding: 11px 28px; }
+  .hc-image { padding: 10px; border-radius: 14px; }
+  .hc-image img { width: 130px; height: 130px; }
   .hc-arrow { display: none; }
 }

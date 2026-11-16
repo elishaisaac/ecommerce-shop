@@ -3,13 +3,16 @@ import { createRoot } from 'react-dom/client'
 import { CartProvider } from "./context/CartContext"
 import { BrowserRouter } from "react-router-dom"
 import App from './App.jsx'
+import { ProductsProvider } from "./context/ProductsContext"
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <CartProvider>
-        <App />
-      </CartProvider>
+      <ProductsProvider>
+        <CartProvider>
+          <App />
+        </CartProvider>
+      </ProductsProvider>
     </BrowserRouter>
   </StrictMode>,
 )

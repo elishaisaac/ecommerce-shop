@@ -1,5 +1,5 @@
 .pd-page {
-  padding: 130px 0 70px; /* the header is 100px tall and floats on top, so we leave room */
+  padding: 24px 0 70px; /* the header is 100px tall and floats on top, so we leave room */
 }
 .pd-toast {
   position: fixed;

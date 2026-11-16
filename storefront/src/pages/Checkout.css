@@ -1,4 +1,4 @@
-.co-page { padding: 120px 0 70px; }
+.co-page { padding: 28px 0 70px; }
 
 .co-progress { margin-bottom: 28px; }
 .co-segments { display: flex; gap: 10px; }
@@ -121,7 +121,7 @@
   border-radius: 12px;
   padding: 22px;
   position: sticky;
-  top: 110px;
+  top: 140px;
 }
 .co-summary h5 { font-weight: 700; margin-bottom: 16px; }
 .co-sum-item { display: flex; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid #e6e6e6; }
@@ -147,7 +147,7 @@
   font-weight: 700;
 }
 
-.os-page { padding: 150px 0 80px; }
+.os-page { padding: 60px 0 80px; }
 .os-check {
   width: 80px;
   height: 80px;
