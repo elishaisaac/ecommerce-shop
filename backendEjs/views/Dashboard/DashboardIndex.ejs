@@ -132,7 +132,7 @@
                             <% } %>
                             <% recentOrders.forEach(o => { %>
                                 <tr>
-                                    <td><%= o.orderNumber %></td>
+                                    <td><a href="/api/order/<%= o._id %>/details"><%= o.orderNumber %></a></td>
                                     <td><%= o.customerName || o.userFID?.userEmail || "-" %></td>
                                     <td><span class="badge text-bg-<%= badge[o.orderStatus] || 'secondary' %>"><%= o.orderStatus %></span></td>
                                     <td class="text-end"><%= money(o.orderTotal) %></td>

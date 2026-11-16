@@ -1,0 +1,119 @@
+<%- include("../partials/HeadSection.ejs") %>
+
+<%
+    const badge = {
+        Pending: "warning",
+        Processing: "info",
+        Shipped: "primary",
+        Delivered: "success",
+        Cancelled: "danger",
+        Returned: "secondary"
+    }
+    const money = (n) => "Rs. " + Number(n || 0).toLocaleString()
+    const itemsTotal = items.reduce((sum, i) => sum + (i.itemTotalPrice || 0), 0)
+    const subtotal = order.subtotal ?? itemsTotal
+    const delivery = order.deliveryCharge ?? 0
+%>
+
+<div class="mb-3">
+    <a href="/api/order" class="text-secondary small">&larr; Back to orders</a>
+    <h3 class="mb-0 mt-1">
+        <%= order.orderNumber %>
+        <span class="badge text-bg-<%= badge[order.orderStatus] || 'secondary' %> fs-6 align-middle">
+            <%= order.orderStatus %>
+        </span>
+    </h3>
+    <div class="text-secondary small">Placed on <%= new Date(order.createdAt).toLocaleString() %></div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card mb-4">
+            <div class="card-header"><h3 class="card-title">Items</h3></div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table align-middle m-0">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>SKU</th>
+                                <th class="text-end">Qty</th>
+                                <th class="text-end">Unit price</th>
+                                <th class="text-end">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (items.length === 0) { %>
+                                <tr><td colspan="5" class="text-center text-secondary py-4">No items found for this order</td></tr>
+                            <% } %>
+                            <% items.forEach(i => { %>
+                                <tr>
+                                    <td><%= i.productVariantFID?.productFID?.productName || "Removed product" %></td>
+                                    <td><%= i.productVariantFID?.productSKU || "-" %></td>
+                                    <td class="text-end"><%= i.itemQuantity %></td>
+                                    <td class="text-end"><%= money(i.itemUnitPrice) %></td>
+                                    <td class="text-end"><%= money(i.itemTotalPrice) %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-between"><span>Subtotal</span><span><%= money(subtotal) %></span></div>
+                <div class="d-flex justify-content-between"><span>Delivery</span><span><%= money(delivery) %></span></div>
+                <div class="d-flex justify-content-between fw-bold fs-5 mt-2 pt-2 border-top">
+                    <span>Total</span><span><%= money(order.orderTotal) %></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card mb-4">
+            <div class="card-header"><h3 class="card-title">Order status</h3></div>
+            <div class="card-body">
+                <form action="/api/order/<%= order._id %>/status" method="post">
+                    <select name="orderStatus" class="form-select mb-3">
+                        <% statuses.forEach(s => { %>
+                            <option value="<%= s %>" <%= s === order.orderStatus ? "selected" : "" %>><%= s %></option>
+                        <% }) %>
+                    </select>
+                    <button type="submit" class="btn btn-primary w-100">Update status</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header"><h3 class="card-title">Customer</h3></div>
+            <div class="card-body">
+                <div class="fw-semibold"><%= order.customerName || "-" %></div>
+                <div><%= order.customerEmail || order.userFID?.userEmail || "-" %></div>
+                <div><%= address?.addressPhone || "-" %></div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header"><h3 class="card-title">Delivery &amp; payment</h3></div>
+            <div class="card-body">
+                <% if (address) { %>
+                    <div class="mb-2">
+                        <%= address.addressLine1 %><br>
+                        <%= address.addressCity %>
+                        <% if (address.addressType) { %>
+                            <span class="badge text-bg-light border ms-1"><%= address.addressType %></span>
+                        <% } %>
+                    </div>
+                <% } else { %>
+                    <div class="text-secondary mb-2">No address saved</div>
+                <% } %>
+                <div class="text-secondary small">Delivery type</div>
+                <div class="mb-2"><%= order.deliveryType || "-" %></div>
+                <div class="text-secondary small">Payment</div>
+                <div><%= order.paymentMethod || "-" %></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include("../partials/Footer.ejs") %>
