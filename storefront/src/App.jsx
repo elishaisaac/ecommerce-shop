@@ -6,6 +6,7 @@ import Cart from "./pages/Cart"
 import Checkout from "./pages/Checkout"
 import OrderSuccess from "./pages/OrderSuccess"
 import Home from "./pages/Home"
+import ScrollToTop from "./components/ScrollToTop"
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/order-success" element={<OrderSuccess />} />
       </Routes>
+      <ScrollToTop />
     </>
   )
 }

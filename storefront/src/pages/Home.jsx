@@ -12,7 +12,7 @@ function Home() {
 
   const newest = [...products].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
   const featured = newest.find(p => p.productImage?.startsWith("/uploads")) || newest[0]
-  const arrivals = newest.slice(0, 3)
+  const arrivals = newest.slice(0, 4)
 
   const categoryMap = {}
   products.forEach(p => {
@@ -90,7 +90,7 @@ function Home() {
             <h2 className="hm-title">New arrivals</h2>
             <Link to="/products">View all products →</Link>
           </div>
-          <div className="row">
+          <div className="pc-grid">
             {arrivals.map(p => (
               <ProductCard key={p._id} product={p} />
             ))}

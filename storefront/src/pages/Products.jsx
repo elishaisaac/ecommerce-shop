@@ -93,7 +93,7 @@ function Products() {
               <p>Try a different search or clear your filters.</p>
             </div>
           ) : (
-            <div className="row">
+            <div className="pc-grid">
               {filtered.map(p => (
                 <ProductCard key={p._id} product={p} />
               ))}
