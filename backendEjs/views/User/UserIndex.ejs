@@ -14,7 +14,7 @@
                             <input type="search" id="user-search" class="form-control" placeholder="Search Users"
                                 aria-label="Search users" style="width: 180px" />
                         </div>
-                                                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
                             data-bs-target="#modal-add-user">
                             <i class="bi bi-person-plus-fill me-1" aria-hidden="true"> </i>
                             New User
@@ -32,7 +32,6 @@
                             <th>#</th>
                             <th>UserType Name</th>
                             <th>User Email</th>
-                            <th>User Password</th>
                             <th class="text-center">Actions</th>
                         </tr>
                     </thead>
@@ -50,9 +49,6 @@
                                     </td>
                                     <td>
                                         <%= item.userEmail %>
-                                    </td>
-                                    <td>
-                                        <%= item.userPassword %>
                                     </td>
 
                                     <td class="text-center">
@@ -83,7 +79,7 @@
                                                 </div>
 
                                                 <div class="modal-body">
-                                                   <div class="mb-3">
+                                                    <div class="mb-3">
                                                         <label for="userTypeFID" class="form-label"> UserType Name
                                                         </label>
                                                         <select id="new-user-role" name="userTypeFID"
@@ -105,10 +101,12 @@
                                                             value="<%= item.userEmail %>" required />
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="userPassword" class="form-label">User
-                                                            Password</label>
-                                                        <input type="text" class="form-control" name="userPassword"
-                                                            value="<%= item.userPassword %>" required />
+                                                        <label for="userPassword" class="form-label">New
+                                                            password</label>
+                                                        <input type="password" class="form-control" name="userPassword"
+                                                            minlength="8" autocomplete="new-password" />
+                                                        <small class="text-muted">Leave empty to keep the current
+                                                            password</small>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -184,8 +182,7 @@
     </div>
 
     <!--begin::Add User Modal-->
-    <div class="modal fade" id="modal-add-user" tabindex="-1" aria-labelledby="modal-add-user-label"
-        aria-hidden="true">
+    <div class="modal fade" id="modal-add-user" tabindex="-1" aria-labelledby="modal-add-user-label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form action="/api/user" method="post">
@@ -210,8 +207,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="userEmail" class="form-label">User Email</label>
-                            <input type="email" class="form-control" name="userEmail"
-                                placeholder="Enter User Email" required />
+                            <input type="email" class="form-control" name="userEmail" placeholder="Enter User Email"
+                                required />
                         </div>
                         <div class="mb-3">
                             <label for="userPassword" class="form-label">User Password</label>
