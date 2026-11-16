@@ -8,6 +8,7 @@ const THEMES = ["theme-orange", "theme-blue", "theme-purple", "theme-green"]
 function HeroCarousel({ products }) {
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
+  const [touchStart, setTouchStart] = useState(null)
   const count = products.length
 
   useEffect(() => {
@@ -19,6 +20,19 @@ function HeroCarousel({ products }) {
   if (count === 0) return null
 
   const go = (n) => setIndex((n + count) % count)
+  const onTouchStart = (e) => {
+    setTouchStart(e.touches[0].clientX)
+    setPaused(true)
+  }
+
+  const onTouchEnd = (e) => {
+    if (touchStart !== null) {
+      const delta = e.changedTouches[0].clientX - touchStart
+      if (Math.abs(delta) > 50) go(delta < 0 ? index + 1 : index - 1)
+    }
+    setTouchStart(null)
+    setPaused(false)
+  }
   const p = products[index]
   const v = cheapestVariant(p)
   const hasDiscount = v && v.productDiscountPercent > 0
@@ -28,8 +42,10 @@ function HeroCarousel({ products }) {
       <div className="container">
         <div
           className={`hc ${THEMES[index % THEMES.length]}`}
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
+          onPointerEnter={e => e.pointerType === "mouse" && setPaused(true)}
+          onPointerLeave={e => e.pointerType === "mouse" && setPaused(false)}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
         >
           <div className="hc-slide" key={p._id}>
             <div className="hc-text">

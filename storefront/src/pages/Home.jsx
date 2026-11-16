@@ -60,6 +60,8 @@ function Home() {
         categoryMap[name].count++
     })
     const categories = Object.values(categoryMap)
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 8)
 
     return (
         <>
@@ -68,20 +70,24 @@ function Home() {
             {categories.length > 0 && (
                 <section className="hm-section" id="categories">
                     <div className="container">
-                        <h2 className="hm-title">Shop by category</h2>
-                        <div className="row">
+                        <div className="hm-title-row">
+                            <h2 className="hm-title">Shop by category</h2>
+                            <Link to="/products">All products →</Link>
+                        </div>
+
+                        <div className="hm-cats">
                             {categories.map(c => (
-                                <div className="col-lg-3 col-md-4 col-sm-6" key={c.name}>
-                                    <Link
-                                        to={`/products?category=${encodeURIComponent(c.name)}`}
-                                        className="hm-category"
-                                    >
-                                        <div className="hm-category-icon">{c.name.charAt(0)}</div>
-                                        <h5>{c.name}</h5>
-                                        <p>{c.detail}</p>
-                                        <span>{c.count} {c.count === 1 ? "product" : "products"} →</span>
-                                    </Link>
-                                </div>
+                                <Link
+                                    key={c.name}
+                                    to={`/products?category=${encodeURIComponent(c.name)}`}
+                                    className="hm-cat"
+                                >
+                                    <span className="hm-cat-icon">{c.name.charAt(0)}</span>
+                                    <span className="hm-cat-text">
+                                        <strong>{c.name}</strong>
+                                        <small>{c.count} {c.count === 1 ? "product" : "products"}</small>
+                                    </span>
+                                </Link>
                             ))}
                         </div>
                     </div>
