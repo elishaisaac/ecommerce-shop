@@ -1,8 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
   <rect width="400" height="400" fill="#f1f1f1"/>
-  <g fill="none" stroke="#c4c4c4" stroke-width="8">
-    <rect x="140" y="80" width="120" height="240" rx="18"/>
-    <circle cx="200" cy="288" r="8"/>
+  <g fill="none" stroke="#c4c4c4" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="110" y="120" width="180" height="140" rx="16"/>
+    <circle cx="160" cy="165" r="14"/>
+    <path d="M118 245l52-48 40 36 32-26 40 38"/>
   </g>
-  <text x="200" y="360" font-family="Arial" font-size="20" text-anchor="middle" fill="#a0a0a0">No image</text>
+  <text x="200" y="320" font-family="Arial, sans-serif" font-size="20" text-anchor="middle" fill="#a0a0a0">No image</text>
 </svg>

@@ -14,9 +14,14 @@
   color: #2a2a2a;
   transition: box-shadow 0.2s, transform 0.2s;
 }
+.pc-card:hover,
+.pc-card:focus,
+.pc-card:active {
+  color: #2a2a2a;
+}
+
 @media (hover: hover) {
   .pc-card:hover {
-    color: #2a2a2a;
     box-shadow: 0 8px 26px rgba(0, 0, 0, 0.1);
     transform: translateY(-3px);
   }
