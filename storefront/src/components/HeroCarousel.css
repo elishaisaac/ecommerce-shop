@@ -13,21 +13,10 @@
   user-select: none;
 }
 
-.hc.theme-orange {
-  background: linear-gradient(120deg, #f35525, #ff8a50);
-}
-
-.hc.theme-blue {
-  background: linear-gradient(120deg, #1f6fe0, #4aa3ff);
-}
-
-.hc.theme-purple {
-  background: linear-gradient(120deg, #6a1bb5, #b04ae8);
-}
-
-.hc.theme-green {
-  background: linear-gradient(120deg, #138a5a, #3fcf8e);
-}
+.hc.theme-orange { background: linear-gradient(120deg, #e8461a, #f56a35); }
+.hc.theme-blue   { background: linear-gradient(120deg, #1a5fd0, #3b82f0); }
+.hc.theme-purple { background: linear-gradient(120deg, #6a1bb5, #9d3fe0); }
+.hc.theme-green  { background: linear-gradient(120deg, #0d6e47, #17995f); }
 
 .hc-slide {
   display: flex;
