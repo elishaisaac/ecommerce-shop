@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Brand</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-7 col-lg-6">
+
+                <!-- Form Card -->
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <h3 class="fw-bold mb-1">
+                            Edit Brand
+                        </h3>
+                        <p class="text-muted mb-4">
+                            Enter the Brand information below.
+                        </p>
+                        <form action="/api/brand/updateBrand/<%= brand._id %>" method="post">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">
+                                    Brand Name
+                                </label>
+                                <input type="text" class="form-control" name="brandName" required value="<%= brand.brandName %>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">
+                                    Brand Code
+                                </label>
+                                <input type="text" class="form-control" name="brandCode" required value="<%= brand.brandCode %>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">
+                                    Brand Detail
+                                </label>
+                                <input type="text" class="form-control" name="brandDetail" required value="<%= brand.brandDetail %>">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">
+                                    Brand Logo
+                                </label>
+                                <input type="text" class="form-control" name="brandLogo" required value="<%= brand.brandLogo %>">
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-success">
+                                    Save
+                                </button>
+                                <a href="/api/attributeValue" class="btn btn-secondary">
+                                    Cancel
+                                </a>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

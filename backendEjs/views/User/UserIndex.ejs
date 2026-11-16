@@ -1,0 +1,242 @@
+<%- include("../partials/HeadSection.ejs") %>
+    <div class="card mb-4">
+        <div class="card-header">
+            <div class="row g-2 align-items-center">
+                <div class="col-12 col-md-4">
+                    <h3 class="card-title">User List</h3>
+                </div>
+                <div class="col-12 col-md-8">
+                    <div class="d-flex flex-wrap justify-content-md-end gap-2">
+                        <div class="input-group input-group-sm w-auto">
+                            <span class="input-group-text">
+                                <i class="bi bi-search" aria-hidden="true"></i>
+                            </span>
+                            <input type="search" id="user-search" class="form-control" placeholder="Search Users"
+                                aria-label="Search users" style="width: 180px" />
+                        </div>
+                        <select id="user-role-filter" class="form-select form-select-sm w-auto"
+                            aria-label="Filter by role">
+                            <option value="all" selected>All roles</option>
+                            <option value="administrator">Administrator</option>
+                            <option value="editor">Editor</option>
+                            <option value="author">Author</option>
+                            <option value="subscriber">Subscriber</option>
+                        </select>
+                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#modal-add-user">
+                            <i class="bi bi-person-plus-fill me-1" aria-hidden="true"> </i>
+                            New User
+                        </button>
+                        <!-- data-bs-toggle="modal" -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle m-0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>UserType Name</th>
+                            <th>User Email</th>
+                            <th>User Password</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (data.length> 0) { %>
+                            <% data.forEach((item, index)=> { %>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <%= index + 1 %>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <%= item.userTypeFID.userTypeName %>
+                                    </td>
+                                    <td>
+                                        <%= item.userEmail %>
+                                    </td>
+                                    <td>
+                                        <%= item.userPassword %>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <div class="btn-group btn-group-sm">
+                                            <button type="button" class="btn btn-outline-secondary"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modal-edit-user-<%= item._id %>">
+                                                <i class="bi bi-pencil" aria-hidden="true"> </i>
+                                            </button>
+                                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                                data-bs-target="#modal-delete-user-<%= item._id %>">
+                                                <i class="bi bi-trash" aria-hidden="true"> </i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!--begin::Edit User Modal-->
+                                <div class="modal fade" id="modal-edit-user-<%= item._id %>" tabindex="-1"
+                                    aria-labelledby="modal-edit-user-label" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <form action="/api/user/updateuser/<%= item._id %>" method="post">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="modal-edit-user-label">Edit
+                                                        User</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+
+                                                <div class="modal-body">
+                                                   <div class="mb-3">
+                                                        <label for="userTypeFID" class="form-label"> UserType Name
+                                                        </label>
+                                                        <select id="new-user-role" name="userTypeFID"
+                                                            class="form-select">
+                                                            <option value="<%= item.userTypeFID._id%>" selected>
+                                                                <%= item.userTypeFID.userTypeName %>
+                                                            </option>
+                                                            <% UserTypes.forEach((userType)=> {%>
+                                                                <option value="<%= userType._id%>">
+                                                                    <%= userType.userTypeName %>
+                                                                </option>
+                                                                <%})%>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="userEmail" class="form-label">User
+                                                            Email</label>
+                                                        <input type="text" class="form-control" name="userEmail"
+                                                            value="<%= item.userEmail %>" required />
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="userPassword" class="form-label">User
+                                                            Password</label>
+                                                        <input type="text" class="form-control" name="userPassword"
+                                                            value="<%= item.userPassword %>" required />
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">
+                                                        Cancel
+                                                    </button>
+                                                    <button type="submit" class="btn btn-primary">Update
+                                                        User</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Edit User Modal-->
+
+                                <!--begin::Delete User Modal-->
+                                <div class="modal fade" id="modal-delete-user-<%= item._id %>" tabindex="-1"
+                                    aria-labelledby="modal-delete-user-label" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modal-delete-user-label">Delete User
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p class="mb-0">
+                                                    Are you sure you want to delete this User?
+                                                    This action cannot be undone.
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Cancel
+                                                </button>
+                                                <form action="/api/user/deleteuser/<%= item._id %>" method="post">
+                                                    <button type="submit" class="btn btn-danger"
+                                                        data-bs-dismiss="modal">
+                                                        Delete User
+                                                    </button>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Delete User Modal-->
+                                <% }) %>
+                                    <% } else { %>
+                                        <tr>
+                                            <td colspan="6" class="text-center py-5">
+                                                <h5 class="text-muted">
+                                                    No User Found
+                                                </h5>
+                                                <p class="text-muted mb-3">
+                                                    Start by adding your first User.
+                                                </p>
+                                                <button type="button" class="btn btn-sm btn-primary"
+                                                    data-bs-toggle="modal" data-bs-target="#modal-add-user">
+                                                    <i class="bi bi-person-plus-fill me-1" aria-hidden="true"> </i>
+                                                    Add User
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.table-responsive -->
+        </div>
+    </div>
+
+    <!--begin::Add User Modal-->
+    <div class="modal fade" id="modal-add-user" tabindex="-1" aria-labelledby="modal-add-user-label"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="/api/user" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal-add-user-label">Add new User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <div class="mb-3">
+                                <label for="userTypeFID" class="form-label"> UserType Name </label>
+                                <select id="new-user-role" name="userTypeFID" class="form-select">
+                                    <option selected>Select UserType</option>
+                                    <% UserTypes.forEach((userType)=> {%>
+                                        <option value="<%= userType._id%>">
+                                            <%= userType.userTypeName %>
+                                        </option>
+                                        <%})%>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userEmail" class="form-label">User Email</label>
+                            <input type="email" class="form-control" name="userEmail"
+                                placeholder="Enter User Email" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="userPassword" class="form-label">User Password</label>
+                            <input type="password" class="form-control" name="userPassword"
+                                placeholder="Enter User Password" required />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary">Create User</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--end::Add User Modal-->
+
+    <%- include("../partials/Footer.ejs") %>

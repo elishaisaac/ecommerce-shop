@@ -1,0 +1,175 @@
+.co-page { padding: 120px 0 70px; }
+
+.co-progress { margin-bottom: 28px; }
+.co-segments { display: flex; gap: 10px; }
+.co-seg {
+  flex: 1;
+  height: 5px;
+  border-radius: 3px;
+  background: #e3e3e3;
+  transition: background 0.3s;
+}
+.co-seg.done { background: #f35525; }
+.co-progress-text {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #666;
+}
+.co-progress-text strong { color: #2a2a2a; }
+
+.co-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.07);
+}
+.co-card h4 { font-size: 20px; font-weight: 700; margin-bottom: 20px; }
+
+.co-field { margin-bottom: 18px; }
+.co-field label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #2a2a2a;
+}
+.co-field input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+}
+.co-field input:focus { border-color: #f35525; }
+.co-field input.invalid { border-color: #d93025; }
+.co-error { color: #d93025; font-size: 13px; margin-top: 5px; }
+
+.co-types { display: flex; gap: 10px; }
+.co-chip {
+  border: 1px solid #ddd;
+  background: #fff;
+  padding: 8px 22px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.co-chip.active { border-color: #f35525; color: #f35525; background: #fff4f0; }
+
+.co-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+.co-option.selected { border-color: #f35525; background: #fff9f7; }
+.co-option input { accent-color: #f35525; width: 18px; height: 18px; }
+.co-option-body { flex: 1; display: flex; flex-direction: column; }
+.co-option-body span { font-size: 13px; color: #777; margin-top: 2px; }
+.co-option-price { font-weight: 700; }
+
+.co-actions { display: flex; gap: 12px; margin-top: 24px; }
+.co-btn {
+  background: #f35525;
+  color: #fff;
+  border: none;
+  padding: 13px 30px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.co-btn:hover { background: #d9431a; color: #fff; }
+.co-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.co-btn.secondary { background: #fff; color: #2a2a2a; border: 1px solid #ccc; }
+.co-btn.secondary:hover { background: #f5f5f5; color: #2a2a2a; }
+
+.co-server-error {
+  background: #fdecea;
+  color: #b3261e;
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.co-recap { display: flex; justify-content: space-between; align-items: flex-start; }
+.co-recap h5 { font-weight: 700; margin-bottom: 8px; }
+.co-recap p { margin: 0 0 3px; color: #555; font-size: 14px; }
+.co-tag {
+  display: inline-block;
+  background: #fff4f0;
+  color: #f35525;
+  font-size: 12px;
+  padding: 1px 10px;
+  border-radius: 12px;
+  margin-left: 6px;
+}
+.co-link { background: none; border: none; color: #0a66c2; font-size: 14px; cursor: pointer; }
+.co-link:hover { text-decoration: underline; }
+
+.co-summary {
+  background: #f7f7f7;
+  border-radius: 12px;
+  padding: 22px;
+  position: sticky;
+  top: 110px;
+}
+.co-summary h5 { font-weight: 700; margin-bottom: 16px; }
+.co-sum-item { display: flex; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid #e6e6e6; }
+.co-sum-item img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 8px;
+  padding: 4px;
+}
+.co-sum-info { flex: 1; }
+.co-sum-name { font-weight: 600; font-size: 14px; }
+.co-sum-label, .co-sum-qty { font-size: 12px; color: #777; }
+.co-sum-line { font-weight: 600; font-size: 14px; }
+.co-sum-rows > div { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; }
+.co-sum-rows .discount { color: #1a8f4c; }
+.co-sum-rows .total {
+  border-top: 1px solid #ddd;
+  margin-top: 8px;
+  padding-top: 14px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.os-page { padding: 150px 0 80px; }
+.os-check {
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: #e6f6ec;
+  color: #1a8f4c;
+  font-size: 40px;
+}
+.os-box {
+  max-width: 460px;
+  margin: 28px auto;
+  background: #f7f7f7;
+  border-radius: 12px;
+  padding: 22px;
+}
+.os-row { display: flex; justify-content: space-between; padding: 7px 0; }
+.os-row.total {
+  border-top: 1px solid #ddd;
+  margin-top: 8px;
+  padding-top: 14px;
+  font-size: 18px;
+  font-weight: 700;
+}

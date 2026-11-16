@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product Variant</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-7 col-lg-6">
+
+                <!-- Form Card -->
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <h3 class="fw-bold mb-1">
+                            Add Product Variant
+                        </h3>
+                        <p class="text-muted mb-4">
+                            Enter the Product Variant information below.
+                        </p>
+
+                        <form action="/api/productVariant" method="post">
+
+                             <div class="mb-3">
+                                <label class="form-label fw-semibold">
+                                   Product ID
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Product ID..."
+                                    name="productFID" required>
+                            </div>
+
+                             <div class="mb-3">
+                                <label class="form-label fw-semibold">
+                                    Product SKU
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Product SKU..."
+                                    name="productSKU" required>
+                            </div>
+
+                             <div class="mb-3">
+                                <label class="form-label fw-semibold">
+                                   Product Actual Price
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Product Actual Price..."
+                                    name="productActualPrice" required>
+                            </div>
+
+                             <div class="mb-3">
+                                <label class="form-label fw-semibold">
+                                   Product Discount Percent
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Product Discount Percent..."
+                                    name="productDiscountPercent" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">
+                                   Product Sale Price
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Product Sale Price..."
+                                    name="productSalePrice" required>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-success">
+                                    Add Product Variant
+                                </button>
+                                <a href="/api/productVariant" class="btn btn-secondary">
+                                    Cancel
+                                </a>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
