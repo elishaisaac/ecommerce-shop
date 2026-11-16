@@ -1,22 +1,24 @@
 import Role from "../../Models/RoleModel.js"
 
+const PROTECTED_ROLE = "Admin"
+
 export const getRoleForm = (req, res) => {
     try {
         res.render("Role/RoleForm.ejs")
     } catch (error) {
-        
+
     }
 }
 
 export const addRole = async (req, res) => {
     try {
-        let { roleName, roleDescription} = req.body
+        let { roleName, roleDescription } = req.body
 
         // const role = await Role.create({
         //     roleName
         // })
         const newRole = new Role({
-            roleName, 
+            roleName,
             roleDescription
         })
         await newRole.save()
@@ -47,7 +49,7 @@ export const allRoles = async (req, res) => {
         //     error: false,
         //     data: allRoles
         // })
-        res.render("Role/RoleIndex.ejs", {data : allRoles})
+        res.render("Role/RoleIndex.ejs", { data: allRoles })
 
     } catch (error) {
         res.status(500).json({
@@ -83,14 +85,20 @@ export const singleRole = async (req, res) => {
 export const editRole = async (req, res) => {
     try {
         const role = await Role.findById(req.params.id)
-        res.render("Role/EditRole.ejs", {role})
+        res.render("Role/EditRole.ejs", { role })
     } catch (error) {
-        
+
     }
 }
 
 export const updateRole = async (req, res) => {
     try {
+        const existing = await Role.findById(req.params.id)
+        if (existing?.roleName === PROTECTED_ROLE && req.body.roleName !== PROTECTED_ROLE) {
+            return res.status(400).send(
+                'The "Admin" role cannot be renamed, because the admin login depends on it.'
+            )
+        }
         const updatedRole = await Role.findByIdAndUpdate(
             req.params.id,
             {
@@ -120,6 +128,10 @@ export const updateRole = async (req, res) => {
 
 export const removeRole = async (req, res) => {
     try {
+        const existing = await Role.findById(req.params.id)
+        if (existing?.roleName === PROTECTED_ROLE) {
+            return res.status(400).send('The "Admin" role cannot be deleted.')
+        }
         await Role.findByIdAndUpdate(
             req.params.id,
             {
@@ -144,6 +156,10 @@ export const removeRole = async (req, res) => {
 
 export const deleteRole = async (req, res) => {
     try {
+        const existing = await Role.findById(req.params.id)
+        if (existing?.roleName === PROTECTED_ROLE) {
+            return res.status(400).send('The "Admin" role cannot be deleted.')
+        }
         await Role.findByIdAndDelete(req.params.id)
 
         res.redirect("/api/role")

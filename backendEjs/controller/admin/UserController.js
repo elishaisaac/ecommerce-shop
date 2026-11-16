@@ -1,6 +1,7 @@
 import User from "../../Models/UserModel.js"
 import UserType from "../../Models/UserTypeModel.js"
 import bcrypt from "bcryptjs"
+import { isLastAdmin } from "../../middleware/auth.js"
 
 export const getUserForm = (req, res) => {
     try {
@@ -138,6 +139,11 @@ export const updateUser = async (req, res) => {
 
 export const removeUser = async (req, res) => {
     try {
+        if (await isLastAdmin(req.params.id)) {
+            return res.status(400).send(
+                "This is the only admin account, so it cannot be deleted. Create another admin first."
+            )
+        }
         await User.findByIdAndUpdate(
             req.params.id,
             {
@@ -162,6 +168,11 @@ export const removeUser = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
     try {
+        if (await isLastAdmin(req.params.id)) {
+            return res.status(400).send(
+                "This is the only admin account, so it cannot be deleted. Create another admin first."
+            )
+        }
         await User.findByIdAndDelete(req.params.id)
 
         res.redirect("/api/user")

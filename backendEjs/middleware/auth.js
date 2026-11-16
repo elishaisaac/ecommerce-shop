@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken"
 import User from "../Models/UserModel.js"
 import UserRole from "../Models/UserRoleModel.js"
+import Role from "../Models/RoleModel.js"
 
 export const COOKIE_NAME = "admin_token"
 
@@ -36,4 +37,25 @@ export const requireAdmin = async (req, res, next) => {
     req.user = user
     res.locals.currentUser = user
     next()
+}
+export const adminUserIds = async () => {
+    const adminRoles = await Role.find({ roleName: "Admin", isDeleted: false })
+
+    const links = await UserRole.find({
+        roleFID: { $in: adminRoles.map(r => r._id) },
+        isDeleted: false
+    })
+
+    const users = await User.find({
+        _id: { $in: links.map(l => l.userFID) },
+        isDeleted: false,
+        isActive: true
+    })
+
+    return users.map(u => String(u._id))
+}
+
+export const isLastAdmin = async (userId) => {
+    const ids = await adminUserIds()
+    return ids.length === 1 && ids[0] === String(userId)
 }

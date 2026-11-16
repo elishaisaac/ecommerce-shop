@@ -1,7 +1,19 @@
 import UserRole from "../../Models/UserRoleModel.js"
 import User from "../../Models/UserModel.js"
 import Role from "../../Models/RoleModel.js"
+import { isLastAdmin } from "../../middleware/auth.js"
+const blocksLastAdmin = async (linkId, change = null) => {
+    const link = await UserRole.findById(linkId).populate("roleFID")
+    if (!link || link.roleFID?.roleName !== "Admin") return false
 
+    if (change) {
+        const sameRole = String(change.roleFID) === String(link.roleFID._id)
+        const sameUser = String(change.userFID) === String(link.userFID)
+        if (sameRole && sameUser) return false
+    }
+
+    return isLastAdmin(link.userFID)
+}
 export const getUserRoleForm = (req, res) => {
     try {
         res.render("UserRole/UserRoleForm.ejs")
@@ -95,6 +107,14 @@ export const editUserRole = async (req, res) => {
 
 export const updateUserRole = async (req, res) => {
     try {
+        if (await blocksLastAdmin(req.params.id, {
+            roleFID: req.body.roleFID,
+            userFID: req.body.userFID
+        })) {
+            return res.status(400).send(
+                "This would leave the system without an admin. Make another admin first."
+            )
+        }
         const updatedUserRole = await UserRole.findByIdAndUpdate(
             req.params.id,
             {
@@ -124,6 +144,11 @@ export const updateUserRole = async (req, res) => {
 
 export const removeUserRole = async (req, res) => {
     try {
+        if (await blocksLastAdmin(req.params.id)) {
+            return res.status(400).send(
+                "This is the only admin's role link, so it cannot be removed. Make another admin first."
+            )
+        }
         await UserRole.findByIdAndUpdate(
             req.params.id,
             {
@@ -148,6 +173,11 @@ export const removeUserRole = async (req, res) => {
 
 export const deleteUserRole = async (req, res) => {
     try {
+        if (await blocksLastAdmin(req.params.id)) {
+            return res.status(400).send(
+                "This is the only admin's role link, so it cannot be removed. Make another admin first."
+            )
+        }
         await UserRole.findByIdAndDelete(req.params.id)
 
         res.redirect("/api/userRole")

@@ -31,7 +31,6 @@ export const addVariantAttributeValue = async (req, res) => {
                 "This variant already has a value for that attribute. Edit the existing row instead."
             )
         }
-
         const newVariantAttributeValue = new VariantAttributeValue({
             productVariantFID,
             attributeFID,
@@ -138,7 +137,17 @@ export const editVariantAttributeValue = async (req, res) => {
 
 export const updateVariantAttributeValue = async (req, res) => {
     try {
-
+        const duplicate = await VariantAttributeValue.findOne({
+            _id: { $ne: req.params.id },
+            productVariantFID: req.body.productVariantFID,
+            attributeFID: req.body.attributeFID,
+            isDeleted: false
+        })
+        if (duplicate) {
+            return res.status(400).send(
+                "This variant already has a value for that attribute. Edit the existing row instead."
+            )
+        }
         const editedVariantAttributeValue =
             await VariantAttributeValue.findByIdAndUpdate(
                 req.params.id,
