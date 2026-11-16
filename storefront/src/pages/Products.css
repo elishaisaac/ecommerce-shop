@@ -1,0 +1,36 @@
+.pl-toolbar {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.pl-toolbar input,
+.pl-toolbar select {
+  padding: 11px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #fff;
+  outline: none;
+}
+.pl-toolbar input:focus,
+.pl-toolbar select:focus { border-color: #f35525; }
+.pl-search { flex: 1; min-width: 220px; }
+
+.pl-count {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 24px;
+}
+.pl-clear {
+  background: none;
+  border: none;
+  color: #f35525;
+  font-size: 14px;
+  margin-left: 12px;
+  cursor: pointer;
+}
+.pl-clear:hover { text-decoration: underline; }
+
+.pl-empty { text-align: center; padding: 60px 0; color: #777; }
+.pl-empty h4 { color: #2a2a2a; margin-bottom: 8px; }

@@ -1,4 +1,4 @@
-import { getImageSrc } from "../utils"
+import { getImageSrc, formatPrice } from "../utils"
 import { Link } from "react-router-dom"
 
 function ProductCard({ product }) {
@@ -13,7 +13,7 @@ function ProductCard({ product }) {
         <div className="down-content">
           <Link to={`/products/${product._id}`}><h4>{product.productName}</h4></Link>
           <span>
-            {product.startingPrice !== null ? `From $${product.startingPrice}` : "Price not set"}
+            {product.startingPrice !== null ? `From ${formatPrice(product.startingPrice)}` : "Price not set"}
           </span>
         </div>
       </div>
