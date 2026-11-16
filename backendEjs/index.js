@@ -1,3 +1,4 @@
+import "dotenv/config"
 import express from "express"
 import connectDB from "./config/db.js"
 
@@ -30,7 +31,7 @@ import path from 'path'
 import { fileURLToPath } from "url"
 
 const app = express()
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 
 // Recreating Directory Path
 const __filename = fileURLToPath(import.meta.url)
