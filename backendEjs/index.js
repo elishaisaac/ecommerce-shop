@@ -24,6 +24,10 @@ import orderDiscountRouter from "./routes/admin/OrderDiscountRoutes.js"
 import orderAddressRouter from "./routes/admin/OrderAddressRoutes.js"
 import dashboardRouter from "./routes/admin/DashboardRoutes.js"
 
+import cookieParser from "cookie-parser"
+import authRouter from "./routes/admin/AuthRoutes.js"
+import { requireAdmin } from "./middleware/auth.js"
+
 // STORE ROUTES
 import storeRouter from "./routes/store/StoreRoutes.js"
 
@@ -41,12 +45,20 @@ const __dirname = path.dirname(__filename)
 // MiddleWare
 app.set('view engine', 'ejs')
 app.set("views", path.join(__dirname, "views"))
-app.use(cors())
-
 app.use(express.static(path.join("public")))
-
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
+
+// PUBLIC: the storefront API and the login page
+app.use("/api/store", storeRouter)
+app.use("/", authRouter)
+
+// GUARD: everything below this line needs an admin login
+app.use("/api", requireAdmin)
+
+app.get("/", (req, res) => res.redirect("/api/dashboard"))
 
 // ADMIN API
 app.use("/api/product", productRouter)

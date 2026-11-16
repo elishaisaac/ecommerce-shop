@@ -11,8 +11,8 @@
                             <span class="input-group-text">
                                 <i class="bi bi-search" aria-hidden="true"></i>
                             </span>
-                            <input type="search" id="userRole-search" class="form-control" placeholder="Search UserRoles"
-                                aria-label="Search userRoles" style="width: 180px" />
+                            <input type="search" id="userRole-search" class="form-control"
+                                placeholder="Search UserRoles" aria-label="Search userRoles" style="width: 180px" />
                         </div>
 
                         <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
@@ -32,6 +32,7 @@
                         <tr>
                             <th>#</th>
                             <th>User Email</th>
+                            <th>User Type</th>
                             <th>Role Name</th>
                             <th>Role Description</th>
                             <th class="text-center">Actions</th>
@@ -48,6 +49,9 @@
                                     </td>
                                     <td>
                                         <%= item.userFID.userEmail %>
+                                    </td>
+                                    <td>
+                                        <%= item.userFID.userTypeFID?.userTypeName || "-" %>
                                     </td>
                                     <td>
                                         <%= item.roleFID.roleName %>
@@ -84,17 +88,19 @@
                                                 </div>
 
                                                 <div class="modal-body">
-                                                   <div class="mb-3">
-                                                        <label for="roleFID" class="form-label"> User Email
+                                                    <div class="mb-3">
+                                                        <label for="roleFID" class="form-label"> Select User
                                                         </label>
                                                         <select id="new-userRole-role" name="userFID"
                                                             class="form-select">
                                                             <option value="<%= item.userFID._id%>" selected>
-                                                                <%= item.userFID.userEmail %>
+                                                                <%= item.userFID.userEmail %> — <%=
+                                                                        item.userFID.userTypeFID?.userTypeName %>
                                                             </option>
                                                             <% Users.forEach((user)=> {%>
                                                                 <option value="<%= user._id%>">
-                                                                    <%= user.userEmail %>
+                                                                    <%= user.userEmail %> — <%=
+                                                                            user.userTypeFID?.userTypeName %>
                                                                 </option>
                                                                 <%})%>
                                                         </select>
@@ -150,7 +156,8 @@
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                                     Cancel
                                                 </button>
-                                                <form action="/api/userRole/deleteuserRole/<%= item._id %>" method="post">
+                                                <form action="/api/userRole/deleteuserRole/<%= item._id %>"
+                                                    method="post">
                                                     <button type="submit" class="btn btn-danger"
                                                         data-bs-dismiss="modal">
                                                         Delete UserRole
@@ -201,12 +208,12 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <div class="mb-3">
-                                <label for="userFID" class="form-label"> User Email </label>
-                                <select id="new-userRole-role" name="userFID" class="form-select">
-                                    <option selected>Select User Email</option>
+                                <label for="userFID" class="form-label"> Select User </label>
+                                <select id="new-userRole-user" name="userFID" class="form-select" required>
+                                    <option value="" selected disabled>Select a user</option>
                                     <% Users.forEach((user)=> {%>
                                         <option value="<%= user._id%>">
-                                            <%= user.userEmail %>
+                                            <%= user.userEmail %> — <%= user.userTypeFID?.userTypeName %>
                                         </option>
                                         <%})%>
                                 </select>
@@ -216,7 +223,7 @@
                             <div class="mb-3">
                                 <label for="roleFID" class="form-label"> Role Name </label>
                                 <select id="new-userRole-role" name="roleFID" class="form-select">
-                                    <option selected>Select Role</option>
+                                    <option value="" selected disabled>Select a role</option>
                                     <% Roles.forEach((role)=> {%>
                                         <option value="<%= role._id%>">
                                             <%= role.roleName %>

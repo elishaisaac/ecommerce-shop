@@ -6,13 +6,13 @@ export const getUserRoleForm = (req, res) => {
     try {
         res.render("UserRole/UserRoleForm.ejs")
     } catch (error) {
-        
+
     }
 }
 
 export const addUserRole = async (req, res) => {
     try {
-        let { userFID, roleFID} = req.body
+        let { userFID, roleFID } = req.body
 
         // const userRole = await UserRole.create({
         //     roleFID
@@ -42,16 +42,16 @@ export const allUserRoles = async (req, res) => {
     try {
         const allUserRoles = await UserRole.find({
             isDeleted: false
-        }).populate("userFID")
-          .populate("roleFID")
-        const Users = await User.find({isDeleted: false})
-        const Roles = await Role.find({isDeleted: false})
+        }).populate({ path: "userFID", populate: { path: "userTypeFID" } })
+            .populate("roleFID")
+        const Users = await User.find({ isDeleted: false }).populate("userTypeFID")
+        const Roles = await Role.find({ isDeleted: false })
         // res.status(200).json({
         //     success: true,
         //     error: false,
         //     data: allUserRoles
         // })
-        res.render("UserRole/UserRoleIndex.ejs", {data : allUserRoles, Users, Roles})
+        res.render("UserRole/UserRoleIndex.ejs", { data: allUserRoles, Users, Roles })
 
     } catch (error) {
         res.status(500).json({
@@ -87,9 +87,9 @@ export const singleUserRole = async (req, res) => {
 export const editUserRole = async (req, res) => {
     try {
         const userRole = await UserRole.findById(req.params.id)
-        res.render("UserRole/EditUserRole.ejs", {userRole})
+        res.render("UserRole/EditUserRole.ejs", { userRole })
     } catch (error) {
-        
+
     }
 }
 

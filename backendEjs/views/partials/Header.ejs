@@ -59,6 +59,17 @@
                 </ul>
             </li>
             <!--end::Color Mode Toggle-->
+            <!--end::Color Mode Toggle-->
+
+            <li class="nav-item d-flex align-items-center ms-2">
+                <form action="/logout" method="post" class="d-flex align-items-center m-0">
+                    <span class="navbar-text small me-2 d-none d-md-inline">
+                        <%= locals.currentUser?.userEmail %>
+                    </span>
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">Log out</button>
+                </form>
+            </li>
+        </ul>
         </ul>
         <!--end::End Navbar Links-->
     </div>
