@@ -257,4 +257,17 @@
     const sparkline3 = new ApexCharts(document.querySelector('#sparkline-3'), option_sparkline3);
     sparkline3.render();
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const search = document.getElementById("user-search")
+        if (!search) return
+
+        search.addEventListener("input", () => {
+            const query = search.value.trim().toLowerCase()
+            document.querySelectorAll("table tbody tr").forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(query) ? "" : "none"
+            })
+        })
+    })
+</script>
 <!--end::Script-->
