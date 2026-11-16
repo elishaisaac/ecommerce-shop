@@ -7,6 +7,7 @@ import Checkout from "./pages/Checkout"
 import OrderSuccess from "./pages/OrderSuccess"
 import Home from "./pages/Home"
 import ScrollToTop from "./components/ScrollToTop"
+import BottomNav from "./components/BottomNav"
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/order-success" element={<OrderSuccess />} />
       </Routes>
       <ScrollToTop />
+      <BottomNav />
     </>
   )
 }

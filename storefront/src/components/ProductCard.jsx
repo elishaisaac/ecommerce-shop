@@ -1,14 +1,10 @@
 import { Link } from "react-router-dom"
-import { getImageSrc, formatPrice } from "../utils"
+import { getImageSrc, formatPrice, cheapestVariant } from "../utils"
 import "./ProductCard.css"
 
 function ProductCard({ product }) {
   const variants = product.variants || []
-
-  const cheapest = variants.reduce(
-    (best, v) => (!best || v.productSalePrice < best.productSalePrice ? v : best),
-    null
-  )
+  const cheapest = cheapestVariant(product)
   const hasDiscount = cheapest && cheapest.productDiscountPercent > 0
   const hasRange = new Set(variants.map(v => v.productSalePrice)).size > 1
 
@@ -26,24 +22,23 @@ function ProductCard({ product }) {
         <div className="pc-brand">{product.brandFID?.brandName}</div>
         <h3 className="pc-name">{product.productName}</h3>
 
-        <div className="pc-price-row">
-          {cheapest ? (
-            <>
-              <div>
-                {hasRange && <span className="pc-from">From</span>}
-                <span className="pc-price">{formatPrice(cheapest.productSalePrice)}</span>
-              </div>
+        {cheapest ? (
+          <>
+            <div className="pc-price-line">
+              {hasRange && <span className="pc-from">From</span>}
+              <span className="pc-price">{formatPrice(cheapest.productSalePrice)}</span>
+            </div>
+            <div className="pc-sub">
               {hasDiscount && (
-                <span className="pc-off">{cheapest.productDiscountPercent}% OFF</span>
+                <>
+                  <span className="pc-off">{cheapest.productDiscountPercent}% OFF</span>
+                  <span className="pc-old">{formatPrice(cheapest.productActualPrice)}</span>
+                </>
               )}
-            </>
-          ) : (
-            <span className="pc-noprice">Price not set</span>
-          )}
-        </div>
-
-        {hasDiscount && (
-          <div className="pc-old">{formatPrice(cheapest.productActualPrice)}</div>
+            </div>
+          </>
+        ) : (
+          <span className="pc-noprice">Price not set</span>
         )}
       </div>
     </Link>

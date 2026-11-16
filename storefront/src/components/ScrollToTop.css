@@ -14,3 +14,7 @@
   z-index: 999;
 }
 .to-top:hover { background: #f35525; }
+
+@media (max-width: 767px) {
+  .to-top { bottom: 80px; right: 14px; }
+}

@@ -163,3 +163,6 @@
 .pd-table { width: 100%; max-width: 700px; border-collapse: collapse; }
 .pd-table td { padding: 12px 16px; border-bottom: 1px solid #eee; font-size: 15px; }
 .pd-table td:first-child { width: 40%; font-weight: 600; color: #2a2a2a; background: #fafafa; }
+@media (max-width: 767px) {
+  .pd-toast { bottom: 80px; right: 14px; left: 14px; text-align: center; }
+}

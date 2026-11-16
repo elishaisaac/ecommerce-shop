@@ -14,10 +14,12 @@
   color: #2a2a2a;
   transition: box-shadow 0.2s, transform 0.2s;
 }
-.pc-card:hover {
-  color: #2a2a2a;
-  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.1);
-  transform: translateY(-3px);
+@media (hover: hover) {
+  .pc-card:hover {
+    color: #2a2a2a;
+    box-shadow: 0 8px 26px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
+  }
 }
 
 .pc-image {
@@ -45,6 +47,9 @@
   text-transform: uppercase;
   letter-spacing: 0.8px;
   color: #f35525;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .pc-name {
   font-size: 15px;
@@ -58,17 +63,25 @@
   overflow: hidden;
 }
 
-.pc-price-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 6px;
+.pc-price-line {
   margin-top: auto;
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
 }
-.pc-from { font-size: 11px; color: #777; margin-right: 4px; }
-.pc-price { font-size: 18px; font-weight: 700; }
+.pc-from { font-size: 12px; color: #777; }
+.pc-price { font-size: 18px; font-weight: 700; white-space: nowrap; }
+
+.pc-sub {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 26px;
+  margin-top: 6px;
+  flex-wrap: nowrap;
+}
 .pc-off {
+  flex-shrink: 0;
   background: #e6f6ec;
   color: #1a8f4c;
   font-size: 12px;
@@ -77,8 +90,16 @@
   border-radius: 6px;
   white-space: nowrap;
 }
-.pc-old { font-size: 13px; color: #999; text-decoration: line-through; margin-top: 2px; }
-.pc-noprice { font-size: 14px; color: #999; }
+.pc-old {
+  min-width: 0;
+  font-size: 13px;
+  color: #999;
+  text-decoration: line-through;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pc-noprice { margin-top: auto; font-size: 14px; color: #999; }
 
 @media (max-width: 991px) {
   .pc-grid { grid-template-columns: repeat(3, 1fr); }
@@ -91,4 +112,5 @@
   .pc-name { font-size: 13px; min-height: 36px; margin-bottom: 8px; }
   .pc-price { font-size: 15px; }
   .pc-off { font-size: 11px; padding: 2px 6px; }
+  .pc-old { font-size: 12px; }
 }

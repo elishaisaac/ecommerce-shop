@@ -67,11 +67,12 @@
 .hm-title-row {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
 }
-.hm-title-row a { color: #f35525; font-weight: 600; }
-
+.hm-title-row .hm-title { margin-bottom: 0; }
+.hm-title-row a { color: #f35525; font-weight: 600; white-space: nowrap; }
 .hm-category {
   display: block;
   background: #fff;
@@ -101,11 +102,36 @@
 .hm-category p { font-size: 14px; color: #777; margin-bottom: 10px; }
 .hm-category span { font-size: 14px; color: #f35525; font-weight: 600; }
 
-.hm-feature { text-align: center; padding: 10px 20px; }
-.hm-feature h5 { font-weight: 700; margin-bottom: 8px; }
-.hm-feature p { color: #777; font-size: 15px; }
-
+.hm-features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.hm-feature {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 22px;
+}
+.hm-feature-icon {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #fff4f0;
+  color: #f35525;
+}
+.hm-feature h5 { font-weight: 700; font-size: 16px; margin: 0 0 4px; color: #2a2a2a; }
+.hm-feature p { font-size: 14px; color: #777; margin: 0; }
 @media (max-width: 767px) {
   .hm-hero { padding-top: 120px; }
   .hm-hero h1 { font-size: 32px; }
+  .hm-section { padding: 36px 0; }
+  .hm-title { font-size: 22px; margin-bottom: 18px; }
+  .hm-title-row { margin-bottom: 18px; }
+  .hm-title-row a { font-size: 14px; }
+  .hm-features { grid-template-columns: 1fr; gap: 12px; }
+  .hm-feature { padding: 16px; }
 }
