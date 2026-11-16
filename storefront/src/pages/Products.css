@@ -1,3 +1,7 @@
+.pl-head { padding: 130px 0 6px; }
+.pl-head h1 { font-size: 30px; font-weight: 700; margin: 0; color: #2a2a2a; }
+.pl-head p { color: #777; margin: 4px 0 0; }
+.pl-section { padding: 20px 0 70px; }
 .pl-toolbar {
   display: flex;
   gap: 12px;

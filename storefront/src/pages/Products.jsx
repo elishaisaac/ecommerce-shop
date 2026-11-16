@@ -39,20 +39,14 @@ function Products() {
 
   return (
     <>
-      <div className="page-heading" id="top">
+      <div className="pl-head">
         <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="inner-content">
-                <h2>Our Products</h2>
-                <span>Browse our full collection</span>
-              </div>
-            </div>
-          </div>
+          <h1>Our Products</h1>
+          <p>Browse our full collection</p>
         </div>
       </div>
 
-      <section className="section" id="products">
+      <section className="pl-section" id="products">
         <div className="container">
 
           <div className="pl-toolbar">

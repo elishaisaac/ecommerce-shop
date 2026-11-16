@@ -3,7 +3,13 @@ import { API_URL } from "./config"
 export const getImageSrc = (path) =>
   path?.startsWith("/uploads")
     ? `${API_URL}${path}`
-    : "/assets/images/men-01.jpg"
+    : "/assets/images/placeholder.svg"
+
+export const cheapestVariant = (product) =>
+  (product.variants || []).reduce(
+    (best, v) => (!best || v.productSalePrice < best.productSalePrice ? v : best),
+    null
+  )
 
 export const formatPrice = (amount) => `Rs. ${Number(amount).toLocaleString()}`
 
