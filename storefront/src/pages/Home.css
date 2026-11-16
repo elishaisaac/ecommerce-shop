@@ -1,0 +1,111 @@
+.hm-hero {
+  padding: 150px 0 80px;
+  background: linear-gradient(135deg, #fff4f0 0%, #ffe3d8 100%);
+}
+.hm-kicker {
+  display: inline-block;
+  color: #f35525;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+.hm-hero h1 {
+  font-size: 46px;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #2a2a2a;
+  margin-bottom: 16px;
+}
+.hm-hero p { font-size: 17px; color: #555; max-width: 480px; margin-bottom: 28px; }
+
+.hm-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+.hm-btn {
+  display: inline-block;
+  background: #f35525;
+  color: #fff;
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  border: 2px solid #f35525;
+  transition: background 0.2s;
+}
+.hm-btn:hover { background: #d9431a; border-color: #d9431a; color: #fff; }
+.hm-btn.outline { background: transparent; color: #f35525; }
+.hm-btn.outline:hover { background: #f35525; color: #fff; }
+
+.hm-featured {
+  display: block;
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(243, 85, 37, 0.15);
+  margin-top: 30px;
+}
+.hm-featured img {
+  max-width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+}
+.hm-featured-info { display: flex; flex-direction: column; margin-top: 14px; }
+.hm-featured-info span {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #f35525;
+  font-weight: 600;
+}
+.hm-featured-info strong { font-size: 20px; color: #2a2a2a; }
+.hm-featured-info em { font-style: normal; color: #777; }
+
+.hm-section { padding: 70px 0; }
+.hm-section.alt { background: #f7f7f7; }
+.hm-title { font-size: 28px; font-weight: 700; margin-bottom: 28px; color: #2a2a2a; }
+.hm-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.hm-title-row a { color: #f35525; font-weight: 600; }
+
+.hm-category {
+  display: block;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 26px 22px;
+  margin-bottom: 24px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.hm-category:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+}
+.hm-category-icon {
+  width: 52px;
+  height: 52px;
+  line-height: 52px;
+  text-align: center;
+  border-radius: 12px;
+  background: #fff4f0;
+  color: #f35525;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.hm-category h5 { font-weight: 700; color: #2a2a2a; margin-bottom: 4px; }
+.hm-category p { font-size: 14px; color: #777; margin-bottom: 10px; }
+.hm-category span { font-size: 14px; color: #f35525; font-weight: 600; }
+
+.hm-feature { text-align: center; padding: 10px 20px; }
+.hm-feature h5 { font-weight: 700; margin-bottom: 8px; }
+.hm-feature p { color: #777; font-size: 15px; }
+
+@media (max-width: 767px) {
+  .hm-hero { padding-top: 120px; }
+  .hm-hero h1 { font-size: 32px; }
+}

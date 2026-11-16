@@ -1,36 +1,16 @@
-import { useState, useEffect } from "react"
 import { useSearchParams } from "react-router-dom"
+import { useProducts } from "../hooks/UseProducts.js"
 import ProductCard from "../components/ProductCard"
-import { API_URL } from "../config"
 import "./Products.css"
 
 function Products() {
-  const [products, setProducts] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const { products, loading, error } = useProducts()
   const [searchParams, setSearchParams] = useSearchParams()
 
   const q = searchParams.get("q") || ""
   const category = searchParams.get("category") || ""
   const brand = searchParams.get("brand") || ""
   const sort = searchParams.get("sort") || "newest"
-
-  useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        const res = await fetch(`${API_URL}/api/store/products`)
-        const result = await res.json()
-        if (!res.ok) throw new Error(result.message)
-        setProducts(result.data)
-      } catch (err) {
-        setError("Could not load products")
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    loadProducts()
-  }, [])
 
   const updateParam = (key, value) => {
     const next = new URLSearchParams(searchParams)
