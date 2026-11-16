@@ -287,4 +287,35 @@
         })
     })
 </script>
+<script>
+    (function () {
+        const refresh = (form) => {
+            const actual = form.querySelector('[name="productActualPrice"]')
+            const discount = form.querySelector('[name="productDiscountPercent"]')
+            const preview = form.querySelector("[data-sale-preview]")
+            if (!actual || !discount || !preview) return
+
+            const a = Number(actual.value)
+            const d = Number(discount.value || 0)
+            preview.value =
+                a > 0 && d >= 0 && d <= 100
+                    ? "Rs. " + Math.round((a * (100 - d)) / 100).toLocaleString()
+                    : ""
+        }
+
+        document.addEventListener("input", (e) => {
+            const form = e.target.closest("form")
+            if (form) refresh(form)
+        })
+
+        document.addEventListener("shown.bs.modal", (e) => {
+            const form = e.target.querySelector("form")
+            if (form) refresh(form)
+        })
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll("form").forEach(refresh)
+        })
+    })()
+</script>
 <!--end::Script-->

@@ -6,7 +6,6 @@ import {
     singleProductVariant,
     removeProductVariant,
     deleteProductVariant,
-    getProductVariantForm,
     updateProductVariant,
     editProductVariant
 } from "../../controller/admin/ProductVariantController.js"
@@ -14,7 +13,6 @@ import {
 
 const productVariantRouter = express.Router()
 
-productVariantRouter.get("/getProductVariantForm",getProductVariantForm)
 productVariantRouter.post( "/", addProductVariant)
 productVariantRouter.get("/", allProductVariants)
 productVariantRouter.get("/:id/editProductVariant", editProductVariant)

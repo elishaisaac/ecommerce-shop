@@ -1,30 +1,37 @@
 import ProductVariant from "../../Models/ProductVariantModel.js";
 import Product from "../../Models/ProductModel.js";
-export const getProductVariantForm = (req, res) => {
-    try {
-        res.render("ProductVariant/ProductVariantForm.ejs")
-    } catch (error) {
-        
+
+const readPrices = (body) => {
+    const actual = Number(body.productActualPrice)
+    const discount = Number(body.productDiscountPercent || 0)
+
+    if (!Number.isFinite(actual) || actual <= 0) {
+        return { error: "Actual price must be a number greater than 0" }
+    }
+    if (!Number.isFinite(discount) || discount < 0 || discount > 100) {
+        return { error: "Discount must be between 0 and 100" }
+    }
+
+    return {
+        actual,
+        discount,
+        sale: Math.round((actual * (100 - discount)) / 100)
     }
 }
 
 export const addProductVariant = async (req, res) => {
     try {
+        const { productFID, productSKU } = req.body
 
-        let {
-            productFID,
-            productSKU,
-            productActualPrice,
-            productDiscountPercent,
-            productSalePrice
-        } = req.body
+        const prices = readPrices(req.body)
+        if (prices.error) return res.status(400).send(prices.error)
 
         const newProductVariant = new ProductVariant({
             productFID,
             productSKU,
-            productActualPrice,
-            productDiscountPercent,
-            productSalePrice
+            productActualPrice: prices.actual,
+            productDiscountPercent: prices.discount,
+            productSalePrice: prices.sale
         })
         await newProductVariant.save()
         res.redirect("/api/productVariant")
@@ -62,8 +69,8 @@ export const allProductVariants = async (req, res) => {
         const allProductVariants = await ProductVariant.find({
             isDeleted: false
         }).populate("productFID")
-        const Products = await Product.find({isDeleted: false})
-        res.render("ProductVariant/ProductVariantIndex.ejs", {data: allProductVariants, Products})
+        const Products = await Product.find({ isDeleted: false })
+        res.render("ProductVariant/ProductVariantIndex.ejs", { data: allProductVariants, Products })
         // res.status(200).json({
         //     success: true,
         //     error: false,
@@ -114,24 +121,25 @@ export const singleProductVariant = async (req, res) => {
 export const editProductVariant = async (req, res) => {
     try {
         const productVariant = await ProductVariant.findById(req.params.id)
-        res.render("ProductVariant/EditProductVariant", {productVariant})
+        res.render("ProductVariant/EditProductVariant", { productVariant })
     } catch (error) {
-        
+
     }
 }
 
 export const updateProductVariant = async (req, res) => {
     try {
-
+        const prices = readPrices(req.body)
+        if (prices.error) return res.status(400).send(prices.error)
         const updatedProductVariant =
             await ProductVariant.findByIdAndUpdate(
                 req.params.id,
-                {
+                                {
                     productFID: req.body.productFID,
                     productSKU: req.body.productSKU,
-                    productActualPrice: req.body.productActualPrice,
-                    productDiscountPercent: req.body.productDiscountPercent,
-                    productSalePrice: req.body.productSalePrice
+                    productActualPrice: prices.actual,
+                    productDiscountPercent: prices.discount,
+                    productSalePrice: prices.sale
                 },
                 {
                     returnDocument: "after",
