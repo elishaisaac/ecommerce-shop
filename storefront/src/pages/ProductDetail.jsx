@@ -1,3 +1,4 @@
+import { usePageTitle } from "../hooks/usePageTitle"
 import { useState, useEffect } from "react"
 import { useParams, Link } from "react-router-dom"
 import { API_URL } from "../config"
@@ -15,6 +16,7 @@ function ProductDetail() {
   const [error, setError] = useState(null)
   const { addToCart } = useCart()
   const [added, setAdded] = useState(false)
+  usePageTitle(product?.productName)
 
   useEffect(() => {
     const loadProduct = async () => {

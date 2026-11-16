@@ -1,0 +1,13 @@
+.nf { text-align: center; padding: 90px 15px; }
+.nf-code { font-size: 96px; font-weight: 800; line-height: 1; color: #f35525; }
+.nf h2 { font-size: 26px; font-weight: 700; margin: 12px 0 8px; color: #2a2a2a; }
+.nf p { color: #777; margin-bottom: 24px; }
+.nf-btn {
+  display: inline-block;
+  background: #f35525;
+  color: #fff;
+  padding: 13px 32px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+.nf-btn:hover { background: #d9431a; color: #fff; }

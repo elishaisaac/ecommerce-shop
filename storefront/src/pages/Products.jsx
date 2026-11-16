@@ -1,3 +1,4 @@
+import { usePageTitle } from "../hooks/usePageTitle"
 import { useSearchParams } from "react-router-dom"
 import { useProducts } from "../hooks/UseProducts.js"
 import ProductCard from "../components/ProductCard"
@@ -11,6 +12,7 @@ function Products() {
   const category = searchParams.get("category") || ""
   const brand = searchParams.get("brand") || ""
   const sort = searchParams.get("sort") || "newest"
+  usePageTitle(category || "Products")
 
   const updateParam = (key, value) => {
     const next = new URLSearchParams(searchParams)

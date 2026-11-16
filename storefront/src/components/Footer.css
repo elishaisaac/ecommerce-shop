@@ -1,0 +1,67 @@
+.ft {
+  background: #f7f7f7;
+  border-top: 1px solid #eee;
+  margin-top: 50px;
+  padding-top: 40px;
+}
+
+.ft-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.3fr;
+  gap: 30px;
+}
+
+.ft-brand { font-size: 22px; font-weight: 800; color: #2a2a2a; margin-bottom: 8px; }
+.ft p { color: #777; font-size: 14px; max-width: 300px; margin: 0; }
+
+.ft h6 {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #2a2a2a;
+  margin-bottom: 12px;
+}
+.ft a {
+  display: block;
+  color: #666;
+  font-size: 14px;
+  padding: 4px 0;
+}
+.ft a:hover { color: #f35525; }
+
+.ft-step { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #666; padding: 4px 0; }
+.ft-step b {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+  border-radius: 50%;
+  background: #fff4f0;
+  color: #f35525;
+  font-size: 12px;
+}
+
+.ft-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px 20px;
+  flex-wrap: wrap;
+  margin-top: 32px;
+  padding: 18px 0;
+  border-top: 1px solid #e6e6e6;
+  font-size: 13px;
+  color: #999;
+}
+
+@media (max-width: 991px) {
+  .ft-grid { grid-template-columns: 1fr 1fr; }
+  .ft-wide { grid-column: 1 / -1; }
+}
+
+@media (max-width: 767px) {
+  .ft { margin-top: 30px; padding-top: 28px; }
+  .ft-grid { gap: 22px 16px; }
+  .ft-bottom { flex-direction: column; margin-top: 22px; }
+}

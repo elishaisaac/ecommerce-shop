@@ -1,3 +1,4 @@
+import { usePageTitle } from "../hooks/usePageTitle"
 import { Link } from "react-router-dom"
 import { useCart, MAX_QTY } from "../context/CartContext"
 import { getImageSrc, formatPrice } from "../utils"
@@ -8,7 +9,7 @@ function Cart() {
     items, updateQuantity, removeFromCart, clearCart,
     totalItems, totalPrice, totalSavings
   } = useCart()
-
+  usePageTitle("Cart")
   if (items.length === 0) {
     return (
       <div className="cart-page container text-center">

@@ -1,3 +1,4 @@
+import { usePageTitle } from "../hooks/usePageTitle"
 import { Link } from "react-router-dom"
 import ProductCard from "../components/ProductCard"
 import { useProducts } from "../hooks/UseProducts.js"
@@ -41,7 +42,7 @@ const features = [
 ]
 function Home() {
     const { products, loading, error } = useProducts()
-
+    usePageTitle()  
     if (loading) return <p className="text-center" style={{ padding: "160px 0" }}>Loading...</p>
     if (error) return <p className="text-center" style={{ padding: "160px 0" }}>{error}</p>
 

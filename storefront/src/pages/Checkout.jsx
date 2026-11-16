@@ -1,3 +1,4 @@
+import { usePageTitle } from "../hooks/usePageTitle"
 import { useState, useEffect } from "react"
 import { Navigate, useNavigate } from "react-router-dom"
 import { useCart } from "../context/CartContext"
@@ -64,7 +65,7 @@ function Checkout() {
 
     loadOptions()
   }, [])
-
+  usePageTitle("Checkout")
   if (items.length === 0) return <Navigate to="/cart" replace />
   if (loadError) return <p className="text-center" style={{ padding: "160px 0" }}>Could not load checkout. Please try again.</p>
   if (!options) return <p className="text-center" style={{ padding: "160px 0" }}>Loading...</p>

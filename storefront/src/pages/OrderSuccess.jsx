@@ -1,3 +1,4 @@
+import { usePageTitle } from "../hooks/usePageTitle"
 import { useEffect } from "react"
 import { Link, Navigate, useLocation } from "react-router-dom"
 import { useCart } from "../context/CartContext"
@@ -12,7 +13,7 @@ function OrderSuccess() {
     if (state?.order) clearCart()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
+  usePageTitle("Order placed")
   if (!state?.order) return <Navigate to="/" replace />
 
   const { order, name } = state
