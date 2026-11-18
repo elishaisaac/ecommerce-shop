@@ -1,10 +1,18 @@
 import { API_URL } from "./config"
 
-export const getImageSrc = (path) =>
-  path?.startsWith("/uploads")
-    ? `${API_URL}${path}`
-    : "/assets/images/placeholder.svg"
+export const getImageSrc = (path) => {
+  if (!path) return "/assets/images/placeholder.svg"
 
+  if (path.startsWith("http")) {
+    return path.includes("res.cloudinary.com")
+      ? path.replace("/upload/", "/upload/f_auto,q_auto/")
+      : path
+  }
+
+  if (path.startsWith("/uploads")) return `${API_URL}${path}`
+
+  return "/assets/images/placeholder.svg"
+}
 export const cheapestVariant = (product) =>
   (product.variants || []).reduce(
     (best, v) => (!best || v.productSalePrice < best.productSalePrice ? v : best),

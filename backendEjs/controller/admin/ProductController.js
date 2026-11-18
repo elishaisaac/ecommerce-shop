@@ -18,7 +18,7 @@ export const addProduct = async (req, res) => {
             categoryFID,
             brandFID } = req.body
 
-        const productImage = req.file ? `/uploads/${req.file.filename}` : ""
+        const productImage = req.file ? req.file.url : ""
 
         const newProduct = new Product({
             productName,
@@ -46,8 +46,8 @@ export const addProduct = async (req, res) => {
 export const allProducts = async (req, res) => {
     try {
         const allProducts = await Product.find({ isDeleted: false })
-        .populate("categoryFID")
-        .populate("brandFID")
+            .populate("categoryFID")
+            .populate("brandFID")
         const categories = await Category.find({ isDeleted: false })
         const brands = await Brand.find({ isDeleted: false })
 
@@ -102,7 +102,7 @@ export const updateProduct = async (req, res) => {
         }
 
         if (req.file) {
-            updateData.productImage = `/uploads/${req.file.filename}`
+            updateData.productImage = req.file.url
         }
 
         const updatedProduct = await Product.findByIdAndUpdate(
