@@ -35,8 +35,26 @@ import cors from "cors"
 import path from 'path'
 import { fileURLToPath } from "url"
 
+import helmet from "helmet"
+
 const app = express()
 const PORT = process.env.PORT || 3000
+
+for (const key of ["MONGO_URI", "JWT_SECRET"]) {
+    if (!process.env[key]) {
+        console.error(`Missing required environment variable: ${key}`)
+        process.exit(1)
+    }
+}
+
+const allowedOrigins = (process.env.CORS_ORIGIN || "http://localhost:5173")
+    .split(",")
+    .map(origin => origin.trim())
+    .filter(Boolean)
+
+if (process.env.NODE_ENV === "production") {
+    app.set("trust proxy", 1)
+}
 
 // Recreating Directory Path
 const __filename = fileURLToPath(import.meta.url)
@@ -46,13 +64,24 @@ const __dirname = path.dirname(__filename)
 app.set("view engine", "ejs")
 app.set("views", path.join(__dirname, "views"))
 app.use(express.static(path.join(__dirname, "public")))
-app.use(cors())
+app.use(helmet({
+    contentSecurityPolicy: false,
+    crossOriginResourcePolicy: { policy: "cross-origin" }
+}))
+app.set("view engine", "ejs")
+app.set("views", path.join(__dirname, "views"))
+app.use(express.static(path.join(__dirname, "public")))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
+
+app.get("/health", (req, res) => res.json({ ok: true }))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 
 // PUBLIC: the storefront API and the login page
-app.use("/api/store", storeRouter)
+app.use("/api/store", cors({ origin: allowedOrigins }), storeRouter)
 app.use("/", authRouter)
 
 // GUARD, then the error helper. Every admin route goes BELOW these two lines.
