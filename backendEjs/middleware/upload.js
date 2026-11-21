@@ -12,7 +12,7 @@ const upload = multer({
             cb(new Error("Only JPG, PNG, WebP or GIF images are allowed"))
         }
     },
-    limits: { fileSize: 5 * 1024 * 1024 }
+    limits: { fileSize: 4 * 1024 * 1024 }
 })
 
 const sendToCloudinary = (buffer) =>
@@ -32,7 +32,7 @@ export const uploadImage = (field) => (req, res, next) => {
     upload.single(field)(req, res, async (err) => {
         if (err) {
             const message =
-                err.code === "LIMIT_FILE_SIZE" ? "Image must be 5 MB or smaller" : err.message
+                err.code === "LIMIT_FILE_SIZE" ? "Image must be 4 MB or smaller" : err.message
             return res.showError(400, message)
         }
 

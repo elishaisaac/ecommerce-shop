@@ -43,7 +43,7 @@ export const login = async (req, res) => {
         res.cookie(COOKIE_NAME, token, {
             httpOnly: true,
             sameSite: "lax",
-            secure: process.env.NODE_ENV === "production",
+            secure: process.env.NODE_ENV === "production" || Boolean(process.env.VERCEL),
             maxAge: EIGHT_HOURS
         })
         res.redirect("/api/dashboard")

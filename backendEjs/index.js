@@ -1,6 +1,7 @@
 import "dotenv/config"
 import express from "express"
 import connectDB from "./config/db.js"
+import ejs from "ejs"
 
 // ADMIN ROUTES
 import productRouter from "./routes/admin/ProductRoutes.js"
@@ -52,7 +53,9 @@ const allowedOrigins = (process.env.CORS_ORIGIN || "http://localhost:5173")
     .map(origin => origin.trim())
     .filter(Boolean)
 
-if (process.env.NODE_ENV === "production") {
+const isProd = process.env.NODE_ENV === "production" || Boolean(process.env.VERCEL)
+
+if (isProd) {
     app.set("trust proxy", 1)
 }
 
@@ -62,6 +65,7 @@ const __dirname = path.dirname(__filename)
 
 // MiddleWare
 app.set("view engine", "ejs")
+app.engine("ejs", ejs.__express)
 app.set("views", path.join(__dirname, "views"))
 app.use(express.static(path.join(__dirname, "public")))
 app.use(helmet({
@@ -79,6 +83,10 @@ app.get("/health", (req, res) => res.json({ ok: true }))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
+app.use(async (req, res, next) => {
+    await connectDB()
+    next()
+})
 
 // PUBLIC: the storefront API and the login page
 app.use("/api/store", cors({ origin: allowedOrigins }), storeRouter)
@@ -132,7 +140,11 @@ app.use((err, req, res, next) => {
     res.status(err.status || 500).json({ success: false, error: true, message: err.message })
 })
 
-app.listen(PORT, () => {
-    console.log("Server has Started...")
-    connectDB()
-})
+if (!process.env.VERCEL) {
+    app.listen(PORT, () => {
+        console.log("Server has Started...")
+        connectDB()
+    })
+}
+
+export default app
